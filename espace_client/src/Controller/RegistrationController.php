@@ -51,7 +51,7 @@ class RegistrationController extends AbstractController
                     ->from(new Address('espace.client.lpdawin@gmail.com', 'Espace Client'))
                     ->to($user->getEmail())
                     ->subject('Please Confirm your Email')
-                    ->htmlTemplate('logo/confirmation_email.html.twig')
+                    ->htmlTemplate('registration/confirmation_email.html.twig')
             );
             // do anything else you need here, like send an email
 
@@ -62,7 +62,7 @@ class RegistrationController extends AbstractController
             );
         }
 
-        return $this->render('logo/register.html.twig', [
+        return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
     }
