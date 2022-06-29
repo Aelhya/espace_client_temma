@@ -1,3 +1,7 @@
+form{
+    padding: 5rem;
+}
+
 .container-auth {
     display: flex;
     flex-direction: column;
@@ -24,7 +28,8 @@
 }
 
 .input-auth {
-    width: 20rem;
+    width: 300px;
+    min-width: 30%;
     height: 2.5rem;
     border-radius: 0.4em;
     border: solid 1px #A62A3D;
@@ -38,7 +43,8 @@
     background: #A62A3D;
     color: white;
     border-radius: 0.4em;
-    width: 20rem;
+    width: 300px;
+    min-width: 30%;
     height: 2.5rem;
     border: none;
     font-size: larger;
@@ -49,5 +55,13 @@
 }
 
 .logo-auth {
-    width: 15%;
+    width: 250px;
+    min-width: 10%;
+}
+
+
+@media only screen and (max-width: 400px) {
+    .input-auth, .btn-auth {
+        width: 250px;
+    }
 }

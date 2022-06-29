@@ -3,6 +3,7 @@
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/authentification/authentification.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 {% endblock %}
 
 {% block body %}
@@ -13,17 +14,17 @@
 
         {% if app.user %}
             <div class="mb-3">
-                You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+                Vous êtes connecté en tant que {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Se déconnecter</a>
             </div>
         {% endif %}
         <div class="container-auth">
             <img src="{{ asset('img/logoTemma.png') }}" alt="Logo TEMMA" class="logo-auth"/>
-            <h1 class="h3 mb-3 font-weight-normal">Connexion</h1>
+            <h1>Connexion</h1>
             <div class="container-auth-inside-input">
                 <div class="container-auth-input">
-                    <label for="inputEmail">Adresse mail</label>
-                    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control input-auth"
-                           autocomplete="email" required autofocus>
+                    <label for="inputId">Identifiant</label>
+                    <input type="text" value="{{ last_username }}" name="email" id="inputId" class="form-control input-auth"
+                           autocomplete="identifiant" required autofocus>
                 </div>
                 <div class="container-auth-input">
                     <label for="inputPassword">Mot de passe</label>
