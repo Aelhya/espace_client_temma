@@ -1,0 +1,24 @@
+.containerNavbar{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #A62A3D;
+    flex-wrap: wrap;
+    color: white;
+    padding: 5px;
+}
+.listeNavbar{
+    list-style: none;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+}
+.alignement{
+    display: flex;
+    align-items: center;
+}
+.logoNavBar{
+    max-width: 15rem
+}
