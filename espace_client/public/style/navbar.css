@@ -40,7 +40,7 @@ i {
 }
 
 /*TODO */
-.submenu-parent{
+/*.submenu-parent{
     position: relative;
 }
 .submenu{
@@ -51,9 +51,51 @@ i {
     background-color: white;
     border: 1px solid #A62A3D;
     /*display: none;*/
-}
+/*}
 .submenu-parent:hover > .submenu {
     display: block;
+}*/
+
+/* Dropdown Content (Hidden by Default) */
+div.subnav-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border: 2px solid #A62A3D;
+    right: 0;
+}
+/* Links inside the dropdown */
+.subnav-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Show the dropdown menu on hover */
+.submenu-parent:hover .subnav-content {
+    display: block;
+}
+
+.subnav-content .submenu{
+    padding-left: 0;
+}
+
+.subnavbtn{
+    background-color: #A62A3D;
+    color: #f9f9f9;
+    border: none;
+    cursor: pointer;
+}
+a.subnavDeco:hover, a.subnavMdp:hover, a.subnavUser:hover{
+    background-color: #A62A3D;
+    color: #f9f9f9;
+}
+
+.submenu-parent:hover .subnavbtn{
+    transform: rotate(180deg);
 }
 /*==================*/
 

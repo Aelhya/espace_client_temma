@@ -17,23 +17,19 @@
             </li>
             <li class="navbar-action__span">
                     <i class="fa-solid fa-circle-user"></i>
-                    <span> {{ app.user.login }}</span>
+                    <span>
+                        <!--{{ app.user }}</span>
+                        -->
             </li>
             <li class="submenu-parent">
-                <i class="fa-solid fa-angle-down"></i>
-                <!--<ul class="submenu">
-                    <li>
-                        <i class="fa-solid fa-user"></i>
-                        <span>Profil</span></li>
-                    <li>
-                        <i class="fa-solid fa-lock"></i>
-                        <span>Changer son mot de passe</span>
-                    </li>
-                    <li>
-                        <i class="fa-solid fa-power-off"></i>
-                        <span>Déconnexion</span>
-                    </li>
-                </ul>-->
+                <button class="subnavbtn"><i class="fa-solid fa-angle-down"></i></button>
+                <div class="subnav-content">
+                    <ul class="submenu">
+                        <a href="" class="subnavUser"><i class="fa-solid fa-user"></i>&nbsp;Profil</a>
+                        <a href="" class="subnavMdp"><i class="fa-solid fa-lock"></i>&nbsp;Changer son mot de passe</a>
+                        <a href="" class="subnavDeco"><i class="fa-solid fa-power-off"></i>&nbsp;Déconnexion</a>
+                    </ul>
+                </div>
             </li>
         </ul>
     </div>
