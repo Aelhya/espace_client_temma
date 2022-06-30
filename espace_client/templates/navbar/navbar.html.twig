@@ -1,4 +1,4 @@
-<link href="{{ asset('style/navbar.css') }}" rel="stylesheet"/>
+<link href="{{ asset('css/navbar.css') }}" rel="stylesheet"/>
 
 <nav>
     <div class="navbar">
@@ -6,7 +6,7 @@
             <a href="{{ path('app_user_index') }}" class="navbar-brand mobile-invisible">
                 <img src="{{ asset('img/logo/logo_temma_blanc.png') }}" alt="logo">
             </a>
-            <span class="mobile-visible"><i class="fa-solid fa-house"></i></span>
+            <a href="{{ path('app_user_index') }}" class="mobile-visible"><i class="fa-solid fa-house"></i></a>
         </div>
         <ul class="navbar-action">
             <li>
@@ -16,20 +16,31 @@
                 <i class="fa-solid fa-gear"></i>
             </li>
             <li class="navbar-action__span">
-                    <i class="fa-solid fa-circle-user"></i>
-                    <span>
-                        <!--{{ app.user }}</span>
-                        -->
+                <i class="fa-solid fa-circle-user"></i>
+                <span>{{ app.user.login }}</span>
             </li>
-            <li class="submenu-parent">
-                <button class="subnavbtn"><i class="fa-solid fa-angle-down"></i></button>
-                <div class="subnav-content">
-                    <ul class="submenu">
-                        <a href="" class="subnavUser"><i class="fa-solid fa-user"></i>&nbsp;Profil</a>
-                        <a href="" class="subnavMdp"><i class="fa-solid fa-lock"></i>&nbsp;Changer son mot de passe</a>
-                        <a href="" class="subnavDeco"><i class="fa-solid fa-power-off"></i>&nbsp;Déconnexion</a>
-                    </ul>
-                </div>
+            <li class="navbar-submenu-parent">
+                <i class="fa-solid fa-angle-down"></i>
+                <ul class="navbar-submenu">
+                    <li>
+                        <a href="">
+                            <i class="fa-solid fa-user"></i>
+                            <span>Profil</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <i class="fa-solid fa-lock"></i>
+                            <span>Changer de mot de passe</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('app_logout') }}">
+                            <i class="fa-solid fa-power-off"></i>
+                            <span>Déconnexion</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
         </ul>
     </div>
