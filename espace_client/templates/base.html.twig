@@ -17,7 +17,10 @@
         {% endblock %}
     </head>
     <body>
-        {% include 'navbar/navbar.html.twig' %}
+        <!-- TODO : changer la condition-->
+        {% if app.request.get('_route') == "app_user_index" %}
+            {% include 'navbar/navbar.html.twig' %}
+        {% endif %}
         {% block body %}{% endblock %}
     </body>
 </html>
