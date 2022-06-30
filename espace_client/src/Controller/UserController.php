@@ -18,14 +18,6 @@ class UserController extends AbstractController
     #[Route('/', name: 'app_user_index', methods: ['GET'])]
     public function index(UserRepository $userRepository): Response
     {
-//        $loader = new FilesystemLoader(dirname(dirname(__DIR__)) . '/templates/user');
-//        $twig = new \Twig\Environment($loader);
-//        $function = new \Twig\TwigFunction('MobileDetect', function () {
-//            return preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
-//    |fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i"
-//                , $_SERVER["HTTP_USER_AGENT"]);
-//        });
-//        $twig->addFunction($function);
         return $this->render('user/index.html.twig', [
             'users' => $userRepository->findAll(),
         ]);
@@ -37,7 +29,9 @@ class UserController extends AbstractController
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
-
+        $mdpRandom = User::randomPassword();
+        $user->setPassword($mdpRandom);
+        $user->setLogin("test");
         if ($form->isSubmitted() && $form->isValid()) {
             $userRepository->add($user, true);
 
