@@ -27,19 +27,19 @@ class FileController extends AbstractController
     }
 
     // TODO : bug lors de la déconnexion
-//   #[Route('/{category_label}', name: 'app_user_file_index', methods: ['GET'])]
-//    public function indexUser(FileRepository $fileRepository, UserRepository $userRepository, CategoryRepository $categoryRepository,
-//                              string $category_label): Response
-//    {
-//        /** @var \App\Entity\User $user */
-//        $user = $this->getUser();
-//
-//        return $this->render('file/index.html.twig', [
-//            'user' => $user,
-//            'category' => $categoryRepository->findOneByLabel($category_label),
-//            'files' => $fileRepository->findByUserAndCategory($user->getLogin(), $category_label),
-//        ]);
-//    }
+    #[Route('/{category_label}', name: 'app_user_file_index', methods: ['GET'])]
+    public function indexUser(FileRepository $fileRepository, UserRepository $userRepository, CategoryRepository $categoryRepository,
+                              string         $category_label): Response
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        return $this->render('file/index.html.twig', [
+            'user' => $user,
+            'category' => $categoryRepository->findOneByLabel($category_label),
+            'files' => $fileRepository->findByUserAndCategory($user->getLogin(), $category_label),
+        ]);
+    }
 
     #[Route('/admin/file/{id}/user_login={user_login}&category_label={category_label}', name: 'app_file_delete', methods: ['POST'])]
     public function delete(Request $request, File $file, FileRepository $fileRepository,
