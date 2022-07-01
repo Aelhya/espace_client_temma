@@ -35,7 +35,7 @@ class UserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $roles = [];
-            if(isset($_POST['user']['isAdmin']) && $_POST['user']['isAdmin'] === 1){
+            if(isset($_POST['user']['isAdmin'])){
                 $roles[] = 'ROLE_ADMIN';
             }else{
                 $roles[] = 'ROLE_USER';
