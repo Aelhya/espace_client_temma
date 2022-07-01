@@ -4,6 +4,7 @@
         <div class="flex-column ">
             {{ form_label(form.enterprise) }}
             {{ form_widget(form.enterprise) }}
+            {{ form_errors(form.enterprise, {'attr': {'class': 'color-red'}}) }}
         </div>
         <div class="flex-column">
             <div>
@@ -13,20 +14,24 @@
                 </abbr>
             </div>
             {{ form_widget(form.email) }}
+            {{ form_errors(form.email) }}
         </div>
     </div>
     <div class="flex-row space-between">
         <div class="flex-column">
             {{ form_label(form.civility) }}
             {{ form_widget(form.civility) }}
+            {{ form_errors(form.civility) }}
         </div>
         <div class="flex-column">
             {{ form_label(form.firstname) }}
             {{ form_widget(form.firstname) }}
+            {{ form_errors(form.firstname) }}
         </div>
         <div class="flex-column">
             {{ form_label(form.lastname) }}
             {{ form_widget(form.lastname) }}
+            {{ form_errors(form.lastname) }}
         </div>
     </div>
     <div>
