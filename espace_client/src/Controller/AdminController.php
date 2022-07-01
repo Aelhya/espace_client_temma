@@ -67,7 +67,7 @@ class AdminController extends AbstractController
     #[Route('/{user_login}/{category_label}', name: 'app_admin_file_index', methods: ['GET'])]
     public function indexFileUserCategory(FileRepository $fileRepository, string $user_login, string $category_label, UserRepository $userRepository, CategoryRepository $categoryRepository): Response
     {
-        return $this->render('admin/file.html.twig', [
+        return $this->render('file/index.html.twig', [
             'user' => $userRepository->findOneByLogin($user_login),
             'category' => $categoryRepository->findOneByLabel($category_label),
             'files' => $fileRepository->findByUserAndCategory($user_login, $category_label),
