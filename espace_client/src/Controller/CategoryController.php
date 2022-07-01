@@ -18,7 +18,7 @@ class CategoryController extends AbstractController
     public function index(CategoryRepository $categoryRepository): Response
     {
         if ($this->getUser() != null) {
-            if ($this->getUser()->getRoles() === ["ROLE_USER", "ROLE_ADMIN"]) {
+            if ($this->getUser()->getRoles() === ["ROLE_ADMIN"]) {
                 return $this->redirectToRoute('app_admin_index');
             }
             return $this->render('category/index.html.twig', [

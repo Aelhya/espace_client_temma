@@ -19,7 +19,12 @@
             <tr>
                 <td>{{ category.label }}</td>
                 <td>
-                    <a href="{{ path('app_category_show', {'category_label': category.label } ) }}">voir les fichiers</a>
+                    {% if app.user.roles[0] is same as('ROLE_ADMIN') %}
+                        <a href="{{ path('app_admin_file_index', {'user_login': user.login, 'category_label': category.label } ) }}">voir les fichiers</a>
+                    {% endif %}
+                    {% if app.user.roles[0] is same as('ROLE_USER') %}
+                        <a href="{{ path('app_category_show', {'category_label': category.label } ) }}">voir les fichiers</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
