@@ -19,7 +19,7 @@
             <tr>
                 <td>{{ category.label }}</td>
                 <td>
-                    <a href="{{ path('app_category_show', {'category_label': category.label } ) }}">voir les fichiers</a>
+                    <a href="{{ path('app_category_show', {'id': category.id } ) }}">voir les fichiers</a>
                 </td>
             </tr>
         {% else %}
