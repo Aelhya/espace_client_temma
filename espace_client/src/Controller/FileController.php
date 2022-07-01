@@ -15,15 +15,6 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/')]
 class FileController extends AbstractController
 {
-    /*#[Route('/{category_label}', name: 'app_file_index', methods: ['GET'])]
-    public function indexUser(FileRepository $fileRepository, string $category_label, CategoryRepository $categoryRepository): Response
-    {
-        return $this->render('file/index.html.twig', [
-            'category' => $categoryRepository->findOneByLabel($category_label),
-            'files' => $fileRepository->findAll(),
-        ]);
-    }*/
-
     #[Route('/new', name: 'app_file_new', methods: ['GET', 'POST'])]
     public function new(Request $request, FileRepository $fileRepository): Response
     {
@@ -43,15 +34,14 @@ class FileController extends AbstractController
         ]);
     }
 
-
-
-    #[Route('/{id}', name: 'app_file_delete', methods: ['POST'])]
-    public function delete(Request $request, File $file, FileRepository $fileRepository): Response
+    #[Route('/file/{id}/user_login={user_login}&category_label={category_label}', name: 'app_file_delete', methods: ['POST'])]
+    public function delete(Request $request, File $file, FileRepository $fileRepository, string $user_login, string $category_label): Response
     {
         if ($this->isCsrfTokenValid('delete'.$file->getId(), $request->request->get('_token'))) {
             $fileRepository->remove($file, true);
         }
 
-        return $this->redirectToRoute('app_file_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_admin_file_index', ['user_login'=> $user_login,
+            'category_label' => $category_label], Response::HTTP_SEE_OTHER);
     }
 }
