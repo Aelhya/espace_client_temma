@@ -34,8 +34,15 @@ class UserController extends AbstractController
         $user->setPassword($userPasswordHasher->hashPassword($user,$mdpRandom));
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $roles = [];
+            if($_POST['user']['isAdmin'] === 1){
+                $roles[] = 'ROLE_ADMIN';
+            }else{
+                $roles[] = 'ROLE_USER';
+            }
             $entreprise = $_POST['user']['enterprise'];
             $user->setLogin($entreprise);
+            $user->setRoles($roles);
             $userRepository->add($user, true);
 
             return $this->redirectToRoute('app_admin_index', [], Response::HTTP_SEE_OTHER);

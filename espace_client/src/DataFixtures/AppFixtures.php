@@ -22,7 +22,7 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $categories = ['Factures', 'Devis', 'Maintenance', "Données machines", "Echanges"];
-        foreach($categories as $category){
+        foreach ($categories as $category) {
             $cat = new Category;
             $cat->setLabel($category);
             $manager->persist($cat);
@@ -39,8 +39,9 @@ class AppFixtures extends Fixture
                 ->setIsVerified(true)
                 ->setCivility("Monsieur")
                 ->setLogin("test-" . $username[0] . $username[1])
+                ->setIsAdmin(false)
                 ->setEnterprise($username)
-            ->setRoles(['ROLE_USER']);
+                ->setRoles(['ROLE_USER']);
             $manager->persist($user);
             $users[$username] = $user;
 
@@ -61,12 +62,13 @@ class AppFixtures extends Fixture
         $admin
             ->setFirstname("Admin")
             ->setLastname("Admin")
-            ->setEmail( 'admin@admin.fr')
+            ->setEmail('admin@admin.fr')
             ->setPassword($this->userPasswordHasher->hashPassword($admin, 'password'))
             ->setIsVerified(true)
             ->setCivility("Monsieur")
             ->setLogin("admin")
             ->setEnterprise("Temma")
+            ->setIsAdmin(true)
             ->setRoles(['ROLE_USER', 'ROLE_ADMIN']);
         $manager->persist($admin);
 
@@ -80,6 +82,7 @@ class AppFixtures extends Fixture
             ->setCivility("Monsieur")
             ->setLogin("test-jb")
             ->setEnterprise("EntrepriseTest")
+            ->setIsAdmin(false)
             ->setRoles(['ROLE_USER']);
         $manager->persist($userWithoutFile);
 

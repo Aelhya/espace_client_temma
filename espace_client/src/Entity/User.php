@@ -51,6 +51,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'json')]
     private $roles = [];
 
+    #[ORM\Column(type: 'boolean')]
+    private $isAdmin = false;
+
     public function __construct()
     {
         $this->files = new ArrayCollection();
@@ -263,5 +266,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             $newLogin[] = $alphabet[$n];
         }
         return implode($newLogin);
+    }
+
+    public function isIsAdmin(): ?bool
+    {
+        return $this->isAdmin;
+    }
+
+    public function setIsAdmin(bool $isAdmin): self
+    {
+        $this->isAdmin = $isAdmin;
+
+        return $this;
     }
 }
