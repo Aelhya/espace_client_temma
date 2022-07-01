@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controller;
+
 use App\Entity\Category;
 use App\Entity\User;
 use App\Repository\CategoryRepository;
@@ -14,33 +15,25 @@ use Symfony\Component\Routing\Annotation\Route;
 class CategoryController extends AbstractController
 {
     #[Route('/', name: 'app_user_category_index', methods: ['GET'])]
-    public function index(CategoryRepository $categoryRepository, UserRepository $userRepository): Response
+    public function index(CategoryRepository $categoryRepository): Response
     {
         if ($this->getUser() != null) {
             if ($this->getUser()->getRoles() === ["ROLE_USER", "ROLE_ADMIN"]) {
                 return $this->redirectToRoute('app_admin_index');
             }
             return $this->render('category/index.html.twig', [
-                'user'=> $this->getUser(),
+                'user' => $this->getUser(),
                 'categories' => $categoryRepository->findAll(),
             ]);
-        }else{
+        } else {
             return $this->redirectToRoute('app_login');
         }
     }
 
-//    #[Route('/file/{id}', name: 'app_category_show', methods: ['GET'])]
-//    public function show(): Response
-//    {
-//        return $this->render('file/index.html.twig'/*, [
-//            'category' => $category,
-//            'files' => $fileRepository->findByUserAndCategory('tesJkU8 ', $category_label)
-//        ]*/);
-//    }
-
     #[Route('/{category_label}/files', name: 'app_category_show', methods: ['GET'])]
-    public function show(FileRepository $fileRepository, UserRepository $userRepository, CategoryRepository $categoryRepository,
-                              string         $category_label): Response
+    public function show(FileRepository     $fileRepository,
+                         CategoryRepository $categoryRepository,
+                         string             $category_label): Response
     {
         /** @var User $user */
         $user = $this->getUser();

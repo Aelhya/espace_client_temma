@@ -17,7 +17,6 @@ class SecurityController extends AbstractController
                 return $this->redirectToRoute('app_admin_index');
             }
             if ($this->getUser()->getRoles() === ["ROLE_USER"]) {
-                //todo : changer la route
                 return $this->redirectToRoute('app_user_category_index');
             }
         }
