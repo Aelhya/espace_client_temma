@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 use App\Entity\Category;
+use App\Entity\User;
 use App\Repository\CategoryRepository;
 use App\Repository\FileRepository;
 use App\Repository\UserRepository;
@@ -28,12 +29,26 @@ class CategoryController extends AbstractController
         }
     }
 
-    #[Route('/file/{id}', name: 'app_category_show', methods: ['GET'])]
-    public function show(): Response
+//    #[Route('/file/{id}', name: 'app_category_show', methods: ['GET'])]
+//    public function show(): Response
+//    {
+//        return $this->render('file/index.html.twig'/*, [
+//            'category' => $category,
+//            'files' => $fileRepository->findByUserAndCategory('tesJkU8 ', $category_label)
+//        ]*/);
+//    }
+
+    #[Route('/{category_label}/files', name: 'app_category_show', methods: ['GET'])]
+    public function show(FileRepository $fileRepository, UserRepository $userRepository, CategoryRepository $categoryRepository,
+                              string         $category_label): Response
     {
-        return $this->render('category/show.html.twig'/*, [
-            'category' => $category,
-            'files' => $fileRepository->findByUserAndCategory('tesJkU8 ', $category_label)
-        ]*/);
+        /** @var User $user */
+        $user = $this->getUser();
+
+        return $this->render('file/index.html.twig', [
+            'user' => $user,
+            'category' => $categoryRepository->findOneByLabel($category_label),
+            'files' => $fileRepository->findByUserAndCategory($user->getLogin(), $category_label),
+        ]);
     }
 }
