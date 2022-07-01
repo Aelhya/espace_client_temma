@@ -16,44 +16,6 @@ use Twig\Loader\FilesystemLoader;
 #[Route('/')]
 class UserController extends AbstractController
 {
-    #[Route('/admin', name: 'app_admin_index', methods: ['GET'])]
-    public function index(UserRepository $userRepository): Response
-    {
-        return $this->render('user/index.html.twig', [
-            'users' => $userRepository->findAll(),
-        ]);
-    }
-
-    #[Route('/admin/user/new', name: 'app_user_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, UserRepository $userRepository, UserPasswordHasherInterface $userPasswordHasher): Response
-    {
-        $user = new User();
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
-        $mdpRandom = User::randomPassword();
-        $user->setPassword($userPasswordHasher->hashPassword($user,$mdpRandom));
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $roles = [];
-            if(isset($_POST['user']['isAdmin'])){
-                $roles[] = 'ROLE_ADMIN';
-            }else{
-                $roles[] = 'ROLE_USER';
-            }
-            $entreprise = $_POST['user']['enterprise'];
-            $user->setLogin($entreprise);
-            $user->setRoles($roles);
-            $userRepository->add($user, true);
-
-            return $this->redirectToRoute('app_admin_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('user/new.html.twig', [
-            'user' => $user,
-            'form' => $form,
-        ]);
-    }
-
     #[Route('/user/{id}', name: 'app_user_show', methods: ['GET'])]
     public function show(User $user): Response
     {
