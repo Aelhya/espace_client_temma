@@ -20,7 +20,7 @@
                 <td>{{ file.id }}</td>
                 <td>{{ file.path }}</td>
                 <td>{{ file.format }}</td>
-                <td>{{ file.createdAt ? file.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ file.created_at ? file.created_at|date('Y-m-d H:i:s') : '' }}</td>
 
             </tr>
         {% else %}
