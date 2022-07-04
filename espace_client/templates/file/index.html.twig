@@ -24,7 +24,7 @@
                 <td>{{ file.format }}</td>
                 <td>{{ file.created_at ? file.created_at|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    Télécharger
+                    <a href="{{ file.path}}" target="_blank">Télécharger</a>
                     {% if app.user.roles[0] is same as('ROLE_ADMIN') %}
                         {{ include('file/_delete_form.html.twig') }}
                     {% endif %}

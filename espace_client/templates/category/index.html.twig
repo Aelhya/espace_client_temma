@@ -4,9 +4,12 @@
 
 {% block body %}
     <p>Afficher le fil d'ariane</p>
-    <p>Afficher données du client ?</p>
-    {{ user.login }}
-    <h1>Category index</h1>
+
+    {% if app.user.roles[0] is same as('ROLE_ADMIN') %}
+        <div>
+            {{ user.login }}
+        </div>
+    {% endif %}
 
     <table class="table">
         <thead>
