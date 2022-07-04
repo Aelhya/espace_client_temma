@@ -91,3 +91,19 @@ hr {
     border: none;
     font-size: larger;
 }
+
+.flash {
+    padding: 1rem;
+}
+
+.flash-success {
+    background: #d1e7dd;
+    border: solid 1px #badbcc;
+    color: #0f5132;
+}
+
+.flash-error {
+    background: #842029;
+    border: solid 1px #f8d7da;
+    color: #f5c2c7;
+}
