@@ -29,6 +29,7 @@ table thead, table tbody {
 table thead tr{
     display: flex;
     gap: 2rem;
+    flex: 2;
 }
 
 table thead{
@@ -37,6 +38,10 @@ table thead{
 table tbody tr{
     padding: 2rem;
     margin: 0;
+    display: flex;
+    flex: 2;
+    width: 100%;
+
 }
 table tbody tr:nth-child(2n){
     background-color: #F5E8EA;
