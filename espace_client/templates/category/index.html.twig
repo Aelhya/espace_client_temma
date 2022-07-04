@@ -1,38 +1,50 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/layout_pages.css') }}">
+{% endblock %}
+
 {% block title %}Category index{% endblock %}
 
 {% block body %}
-    <p>Afficher le fil d'ariane</p>
-
     {% if app.user.roles[0] is same as('ROLE_ADMIN') %}
-        <div>
-            {{ user.login }}
+        <div class="page_header">
+            <h1>Zone d'archivage de l'entreprise {{ user.enterprise }} </h1>
+            <div>
+                <a href="{{ path("app_admin_index") }}">Accueil</a> <span>/</span> <a
+                        href="{{ path('app_admin_category_index', {'user_login': user.login}) }}"> Dossier
+                    de {{ user.enterprise }}</a>
+            </div>
+        </div>
+    {% endif %}
+    {% if app.user.roles[0] is same as('ROLE_USER') %}
+        <div class="page_header">
+            <h1>Zone d'archivage de l'entreprise {{ user.enterprise }} </h1>
+            <div>
+                <a href="{{ path("app_user_category_index") }}">Accueil</a>
+            </div>
         </div>
     {% endif %}
 
     <table class="table">
         <thead>
             <tr>
-                <th>Label</th>
+                <th>Nom des dossiers</th>
             </tr>
         </thead>
         <tbody>
         {% for category in categories %}
-            <tr>
+            {% if app.user.roles[0] is same as('ROLE_ADMIN') %}
+                <tr onclick="location.href='{{ path('app_admin_file_index', {'user_login': user.login, 'category_label': category.label } )}}';">
+            {% endif %}
+            {% if app.user.roles[0] is same as('ROLE_USER') %}
+                <tr onclick="location.href='{{ path('app_category_show', {'category_label': category.label } ) }}';">
+            {% endif %}
                 <td>{{ category.label }}</td>
-                <td>
-                    {% if app.user.roles[0] is same as('ROLE_ADMIN') %}
-                        <a href="{{ path('app_admin_file_index', {'user_login': user.login, 'category_label': category.label } ) }}">voir les fichiers</a>
-                    {% endif %}
-                    {% if app.user.roles[0] is same as('ROLE_USER') %}
-                        <a href="{{ path('app_category_show', {'category_label': category.label } ) }}">voir les fichiers</a>
-                    {% endif %}
-                </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">no records found</td>
+                <td colspan="3">Pas de dossiers</td>
             </tr>
         {% endfor %}
         </tbody>
