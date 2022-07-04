@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\File;
 use App\Entity\User;
+use App\Form\FileType;
 use App\Form\UserType;
 use App\Repository\CategoryRepository;
 use App\Repository\FileRepository;
@@ -107,6 +109,31 @@ class AdminController extends AbstractController
             'user' => $userRepository->findOneByLogin($user_login),
             'category' => $categoryRepository->findOneByLabel($category_label),
             'files' => $fileRepository->findByUserAndCategory($user_login, $category_label),
+        ]);
+    }
+
+    #[Route('/{user_login}/{category_label}/file/new', name: 'app_admin_file_new', methods: ['GET', 'POST'])]
+    public function addFileUserCategory(Request $request, FileRepository $fileRepository,
+                                        string $user_login, string $category_label,
+                                        UserRepository $userRepository, CategoryRepository $categoryRepository): Response
+    {
+        $file = new File();
+        $form = $this->createForm(FileType::class, $file);
+        $form->handleRequest($request);
+        /*
+        utiliser setCatagory ($categoryRepository->findOneByLabel($category_label) et setUser ($userRepository->findOneByLogin($user_login) (un truc comme ça) pour les mettre dans le fichier
+        */
+        if ($form->isSubmitted() && $form->isValid()) {
+            $fileRepository->add($file, true);
+
+            return $this->redirectToRoute('app_file_index', ['user'=> $user_login, 'category'=>$category_label], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('file/new.html.twig', [
+            'user' => $userRepository->findOneByLogin($user_login),
+            'category' => $categoryRepository->findOneByLabel($category_label),
+            'file' => $file,
+            'form' => $form,
         ]);
     }
 }

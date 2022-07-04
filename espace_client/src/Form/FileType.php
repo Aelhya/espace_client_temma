@@ -15,8 +15,6 @@ class FileType extends AbstractType
             ->add('path')
             ->add('format')
             ->add('created_at')
-            ->add('user')
-            ->add('category')
         ;
     }
 
