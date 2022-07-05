@@ -8,7 +8,7 @@
 
 {% block body %}
     {% if app.user.roles[0] is same as('ROLE_ADMIN') %}
-        <div class="page_header">
+        <div class="page_header no-print">
             <h1>Zone d'archivage de l'entreprise {{ user.enterprise }} </h1>
             <div>
                 <a href="{{ path("app_admin_index") }}">Accueil</a> <span>/</span> <a
@@ -18,7 +18,7 @@
         </div>
     {% endif %}
     {% if app.user.roles[0] is same as('ROLE_USER') %}
-        <div class="page_header">
+        <div class="page_header no-print">
             <h1>Zone d'archivage de l'entreprise {{ user.enterprise }} </h1>
             <div>
                 <a href="{{ path("app_user_category_index") }}">Accueil</a>
@@ -40,7 +40,7 @@
             {% if app.user.roles[0] is same as('ROLE_USER') %}
                 <tr onclick="location.href='{{ path('app_category_show', {'category_label': category.label } ) }}';">
             {% endif %}
-                <td>{{ category.label }}</td>
+                <td> <i class="fa-solid fa-folder-open"></i> {{ category.label }}</td>
             </tr>
         {% else %}
             <tr>

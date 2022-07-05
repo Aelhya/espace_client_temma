@@ -7,7 +7,7 @@
 
 {% block body %}
     {% if app.user.roles[0] is same as('ROLE_ADMIN') %}
-        <div class="page_header">
+        <div class="page_header no-print">
             <h1>Zone d'archivage de l'entreprise {{ user.enterprise }} </h1>
             <div>
                 <a href="{{ path("app_admin_index") }}">Accueil</a>
@@ -23,7 +23,7 @@
         </div>
     {% endif %}
     {% if app.user.roles[0] is same as('ROLE_USER') %}
-        <div class="page_header">
+        <div class="page_header no-print">
             <h1>Zone d'archivage de l'entreprise {{ user.enterprise }} </h1>
             <div>
                 <a href="{{ path("app_user_category_index") }}">Accueil</a> /
@@ -38,7 +38,7 @@
             <div class="divTableCell namefile">Nom du fichier</div>
             <div class="divTableCell responsive-user">Format</div>
             <div class="divTableCell responsive-user">Date d'ajout</div>
-            <div class="divTableCell responsive-user">Actions</div>
+            <div class="divTableCell responsive-user no-print">Actions</div>
         </div>
         {% for file in files %}
             <div class="divTableRow"
@@ -46,7 +46,7 @@
                 <div class="divTableCell namefile content padding-right-after-cut-word cut-txt-overflow">{{ file.path }}</div>
                 <div class="divTableCell content responsive-user">{{ file.format }}</div>
                 <div class="divTableCell content padding-right-after-cut-word cut-txt-overflow responsive-user">{{ file.created_at ? file.created_at|date('d-m-Y') : '' }}</div>
-                <div class="divTableCell content padding-right-after-cut-word cut-txt-overflow responsive-user">
+                <div class="divTableCell content padding-right-after-cut-word cut-txt-overflow responsive-user no-print">
                     <div class="file_action">
                         <a href="{{ file.path }}" target="_blank"><i class="fa fa-download"></i><span>Télécharger</span></a>
                         {% if app.user.roles[0] is same as('ROLE_ADMIN') %}

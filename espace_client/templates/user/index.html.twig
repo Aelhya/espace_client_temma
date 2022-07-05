@@ -21,13 +21,13 @@
     <div class="page_header">
         <h1>Liste des clients</h1>
     </div>
-    <button class="btn-user-add">
+    <button class="btn-user-add no-print">
         <a href="{{ path('app_user_new') }}">
             <i class="fa-solid fa-file-import"></i>
             Importer des clients à partir d'un csv
         </a>
     </button>
-    <button class="btn-user-add">
+    <button class="btn-user-add no-print">
         <a href="{{ path('app_user_new') }}">
             <i class="fa-solid fa-plus color-white"></i>
             Nouvel utilisateur
@@ -37,14 +37,13 @@
         <div class="divTableRow bold">
             <div class="divTableCell">Entreprise</div>
             <div class="divTableCell responsive-user">Email</div>
-            <div class="divTableCell">Actions</div>
+            <div class="divTableCell actions">Actions</div>
         </div>
         {% for user in users %}
-            <div class="divTableRow"
-                 onclick="location.href='{{ path('app_admin_category_index', {'user_login': user.login}) }}';">
+            <div class="divTableRow">
                 <div class="divTableCell padding-right-after-cut-word cut-txt-overflow">{{ user.enterprise }}</div>
                 <div class="divTableCell responsive-user">{{ user.email }}</div>
-                <div class="divTableCell action_user">
+                <div class="divTableCell action_user actions">
                     <a href="{{ path('app_user_show', {'id': user.id })}}">
                         <i class="fa-solid fa-eye"></i>
                         <span>Voir les détails</span>
@@ -54,6 +53,10 @@
                         <span>Editer le client</span>
                     </a>
                     {{ include('user/_delete_form.html.twig') }}
+                    <a href="{{ path('app_admin_category_index', {'user_login': user.login}) }}">
+                        <i class="fa-solid fa-folder-open"></i>
+                        <span>Accéder aux dossiers</span>
+                    </a>
                     <a href="#">
                         <i class="fa-solid fa-file-circle-plus"></i>
                         <span>Ajouter un fichier</span>
