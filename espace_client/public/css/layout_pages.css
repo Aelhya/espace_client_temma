@@ -6,6 +6,10 @@ main {
     margin: 0 0 0.5rem 0;
     padding: 1rem;
     border-bottom: 1px solid #E8E8E8;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .page_header h1 {
@@ -16,6 +20,20 @@ main {
     text-decoration: none;
     border-bottom: 1px solid black;
     color: black;
+}
+
+.page-header .add_file a {
+    text-decoration: none;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+    color: black;
+    background-color: red;
+}
+
+.page-header .add_file:hover span {
+    border-bottom: 1px solid black;
 }
 
 .page_header span{

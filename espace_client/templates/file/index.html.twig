@@ -8,16 +8,24 @@
 {% block body %}
     {% if app.user.roles[0] is same as('ROLE_ADMIN') %}
         <div class="page_header no-print">
-            <h1>Zone d'archivage de l'entreprise {{ user.enterprise }} </h1>
             <div>
-                <a href="{{ path("app_admin_index") }}">Accueil</a>
-                <span>/</span>
-                <a
-                        href="{{ path('app_admin_category_index', {'user_login': user.login}) }}"> Dossier
-                    de {{ user.enterprise }}</a>
-                <span>/</span>
-                <a
-                        href="{{ path('app_admin_file_index', {'user_login': user.login, 'category_label': category.label}) }}">{{ category.label }}
+                <h1>Zone d'archivage de l'entreprise {{ user.enterprise }} </h1>
+                <div>
+                    <a href="{{ path("app_admin_index") }}">Accueil</a>
+                    <span>/</span>
+                    <a
+                            href="{{ path('app_admin_category_index', {'user_login': user.login}) }}"> Dossier
+                        de {{ user.enterprise }}</a>
+                    <span>/</span>
+                    <a
+                            href="{{ path('app_admin_file_index', {'user_login': user.login, 'category_label': category.label}) }}">{{ category.label }}
+                    </a>
+                </div>
+            </div>
+            <div class="add_file">
+                <a href="{{ path('app_admin_file_new', {'user_login' : user.login}) }}">
+                    <i class="fa-solid fa-file-circle-plus"></i>
+                    <span>Ajouter un fichier</span>
                 </a>
             </div>
         </div>
@@ -60,5 +68,4 @@
         {% endfor %}
     </div>
 
-    <a href="{{ path('app_admin_file_new',  {'user_login': user.login } ) }}">Ajouter un fichier</a>
 {% endblock %}
