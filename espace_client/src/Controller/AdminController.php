@@ -20,6 +20,7 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Routing\RouterInterface;
 use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
 
@@ -118,15 +119,41 @@ class AdminController extends AbstractController
                                         UserRepository $userRepository, CategoryRepository $categoryRepository): Response
     {
         $file = new File();
-        $form = $this->createForm(FileType::class, $file);
+        $categories = $categoryRepository->findAll();
+        $form = $this->createForm(FileType::class, $file, array(
+            'category' => $categories
+        ));
         $form->handleRequest($request);
-        /*
-        utiliser setCatagory ($categoryRepository->findOneByLabel($category_label) et setUser ($userRepository->findOneByLogin($user_login) (un truc comme ça) pour les mettre dans le fichier
-        */
         if ($form->isSubmitted() && $form->isValid()) {
+            $documentFile = $form['document']->getData();
+            $uploadDirectory = '../src/Document/'.$user_login."/".$category_label;
+            if (file_exists($uploadDirectory."/".$documentFile->getClientOriginalName())){
+                $compteur = 1;
+                $passage = false;
+                while ($passage == false){
+                    if (!file_exists($uploadDirectory."/".pathinfo($documentFile->getClientOriginalName(), PATHINFO_FILENAME)."(".$compteur.").".pathinfo($documentFile->getClientOriginalName(), PATHINFO_EXTENSION))){
+                        $passage = true;
+                        $file->setName(pathinfo($documentFile->getClientOriginalName(), PATHINFO_FILENAME)."(".$compteur.").".pathinfo($documentFile->getClientOriginalName(), PATHINFO_EXTENSION));
+                        $file->setPath($uploadDirectory."/".pathinfo($documentFile->getClientOriginalName(), PATHINFO_FILENAME)."(".$compteur.").".pathinfo($documentFile->getClientOriginalName(), PATHINFO_EXTENSION));
+                        $documentFile->move($uploadDirectory, pathinfo($documentFile->getClientOriginalName(), PATHINFO_FILENAME)."(".$compteur.").".pathinfo($documentFile->getClientOriginalName(), PATHINFO_EXTENSION));
+                    }
+                    $compteur ++;
+                }
+            }else{
+                $file->setName($documentFile->getClientOriginalName());
+                $file->setPath($uploadDirectory."/".$documentFile->getClientOriginalName());
+                $documentFile->move($uploadDirectory, $documentFile->getClientOriginalName());
+
+            }
+            $file->setUser($userRepository->findOneByLogin($user_login));
+            $file->setCreatedAt(new \DateTimeImmutable());
+            $file->setFormat(pathinfo($documentFile->getClientOriginalName(), PATHINFO_EXTENSION));
+            $category_name = $_POST['category'];
+            $category = $categoryRepository->findOneByLabel($category_name);
+            $file->setCategory($category);
             $fileRepository->add($file, true);
 
-            return $this->redirectToRoute('app_file_index', ['user'=> $user_login, 'category'=>$category_label], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_admin_file_index', ['user_login'=> $user_login, 'category_label'=>$category_label], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('file/new.html.twig', [
