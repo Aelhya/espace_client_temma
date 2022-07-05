@@ -121,12 +121,13 @@ class AdminController extends AbstractController
         $file = new File();
         $categories = $categoryRepository->findAll();
         $form = $this->createForm(FileType::class, $file, array(
-            'category' => $categories
+            'categories' => $categories
         ));
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $documentFile = $form['document']->getData();
-            $uploadDirectory = '../src/Document/'.$user_login."/".$category_label;
+            $category_name = $_POST['file']['category'];
+            $uploadDirectory = '../src/Document/'.$user_login."/".$category_name;
             if (file_exists($uploadDirectory."/".$documentFile->getClientOriginalName())){
                 $compteur = 1;
                 $passage = false;
@@ -147,8 +148,7 @@ class AdminController extends AbstractController
             }
             $file->setUser($userRepository->findOneByLogin($user_login));
             $file->setCreatedAt(new \DateTimeImmutable());
-            $file->setFormat(pathinfo($documentFile->getClientOriginalName(), PATHINFO_EXTENSION));
-            $category_name = $_POST['category'];
+            $file->setFormat(pathinfo($documentFile->getClientOriginalName(), PATHINFO_EXTENSION));;
             $category = $categoryRepository->findOneByLabel($category_name);
             $file->setCategory($category);
             $fileRepository->add($file, true);

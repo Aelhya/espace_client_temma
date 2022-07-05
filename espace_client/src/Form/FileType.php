@@ -18,13 +18,14 @@ class FileType extends AbstractType
         $builder
             ->add('document', FileTypeSymfony::class, [
                 "mapped" => false,
-                "label" => "Choississez le Document"
+                "label" => "Choisissez le document"
             ])
             ->add('category', ChoiceType::class, [
                 'placeholder'       => '',
                 'choices'           => $options['categories'],
-                'choice_label'      => 'code',
-                'choice_value'      => 'code'
+                'choice_label'      => 'label',
+                'choice_value'      => 'label',
+                'label' => 'Choisissez la catégorie'
             ])
         ;
     }
