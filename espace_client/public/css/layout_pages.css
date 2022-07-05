@@ -12,8 +12,14 @@ main {
     padding: 0;
 }
 
-span{
-    color : #E8E8E8;
+.page-header a {
+    text-decoration: none;
+    border-bottom: 1px solid black;
+    color: black;
+}
+
+.page_header span{
+    color : #1e1d1d;
 }
 table{
     width: 100%;
@@ -23,7 +29,6 @@ table{
 table thead, table tbody {
     display: flex;
     flex-direction: column;
-    width: 100%;
 }
 
 table thead tr{
@@ -40,8 +45,6 @@ table tbody tr{
     margin: 0;
     display: flex;
     flex: 2;
-    width: 100%;
-
 }
 table tbody tr:nth-child(2n){
     background-color: #F5E8EA;
@@ -55,11 +58,6 @@ table tbody tr:hover{
     background-color: #A62A3D;
     cursor: pointer;
     color: white;
-}
-
-a {
-    text-decoration: none;
-    color: blue;
 }
 
 .file_action{

@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="{{ asset('css/layout_pages.css') }}">
 {% endblock %}
 
-{% block title %}Category index{% endblock %}
+{% block title %}Liste des dossiers{% endblock %}
 
 {% block body %}
     {% if app.user.roles[0] is same as('ROLE_ADMIN') %}
@@ -44,7 +44,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">Pas de dossiers</td>
+                <td colspan="3">Pas de dossier.</td>
             </tr>
         {% endfor %}
         </tbody>

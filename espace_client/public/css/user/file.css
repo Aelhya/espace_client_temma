@@ -43,7 +43,6 @@
     flex: 3;
 }
 
-
 .divTableCell:first-child {
     padding-left: 0.5rem;
 }
@@ -56,22 +55,39 @@
     padding: 0.5rem;
 }
 
-.fa-download{
- color:grey;
+.file_action a, .file_action form button{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    text-decoration: none;
+}
+
+.file_action a span, .file_action form button span{
+    font-size: 12px;
+    font-family: 'Quicksand', serif;
+    border-bottom: 1px solid black;
 }
 
 .fa-trash{
     color: #A62A3D;
 }
 
-.divTableRow:not(:first-child):hover .fa-trash{
-    color: black;
-}
-
-.fa-download:hover, .fa-trash:hover{
+.divTableRow:not(:first-child):hover .fa-trash,
+.divTableRow:not(:first-child):hover .fa-download,
+.divTableRow:not(:first-child):hover .file_action span,
+.divTableRow:not(:first-child):hover .file_action a
+{
     color: white;
     cursor: pointer;
 }
+
+.divTableRow:not(:first-child):hover .file_action span{
+    text-decoration: none;
+    border-bottom: 1px solid white;
+}
+
 /*  --- Fin liste file --- */
 
 
