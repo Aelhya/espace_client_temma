@@ -54,14 +54,13 @@
 
 .divTableRow:not(:first-child):hover{
     background: #57000D;
-    cursor: pointer;
 }
 
 .divTableCell:not(:last-child) {
     flex: 2;
 }
 .divTableCell:last-child {
-    flex: 3;
+    flex: 5;
 }
 
 .divTableCell:first-child {
@@ -111,12 +110,22 @@
 
 .action_user a span, .action_user button span{
     font-size: 12px;
+    font-family: 'Quicksand', serif;
 }
 
-.action_user a:hover span{
+.action_user a:hover span, form button:hover span{
     border-bottom: 1px solid white;
 }
 
+form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+}
+form button{
+    width: 100%;
+}
 /* --- MEDIA QUERRIES --- */
 /* --- Version téléphone --- */
 @media only screen and (max-width: 767px) {

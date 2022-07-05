@@ -67,7 +67,6 @@
 .file_action a span, .file_action form button span{
     font-size: 12px;
     font-family: 'Quicksand', serif;
-    border-bottom: 1px solid black;
 }
 
 .fa-trash{
@@ -84,6 +83,12 @@
 }
 
 .divTableRow:not(:first-child):hover .file_action span{
+    text-decoration: none;
+    border-bottom: 1px solid white;
+}
+
+.divTableRow:not(:first-child):hover a:hover span,
+.divTableRow:not(:first-child):hover button:hover span{
     text-decoration: none;
     border-bottom: 1px solid white;
 }

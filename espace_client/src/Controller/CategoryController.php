@@ -21,7 +21,7 @@ class CategoryController extends AbstractController
             }
             return $this->render('category/index.html.twig', [
                 'user' => $this->getUser(),
-                'categories' => $categoryRepository->findAll(),
+                'categories' => $categoryRepository->findBy(array(), array('label' => 'ASC')),
             ]);
         } else {
             return $this->redirectToRoute('app_login');

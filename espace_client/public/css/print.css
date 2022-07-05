@@ -6,14 +6,18 @@ nav,
 }
 
 body *,
-i{
+i,
+.color-blue,
+.color-white{
     color: black;
     background-color: white;
 }
 
 .input,
 .input-long,
-.choice-field,
+.choice-field {
+    border: 1px solid black !important;
+}
 .container-user-inside-input {
-    border: 1px solid black;
+ border: none;
 }
