@@ -14,15 +14,12 @@ use Doctrine\ORM\Exception\ORMException;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\Routing\RouterInterface;
 use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
 
 #[Route('/admin')]
@@ -46,7 +43,10 @@ class AdminController extends AbstractController
     }
 
     #[Route('/user/new', name: 'app_user_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, UserRepository $userRepository, UserPasswordHasherInterface $userPasswordHasher, ResetPasswordHelperInterface $resetPasswordHelper, MailerInterface $mailer, Session $session): Response
+    public function new(Request $request, UserRepository $userRepository,
+                        UserPasswordHasherInterface $userPasswordHasher,
+                        ResetPasswordHelperInterface $resetPasswordHelper,
+                        MailerInterface $mailer, Session $session): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
@@ -206,7 +206,10 @@ class AdminController extends AbstractController
     }
 
     #[Route('/import/user/add', name: 'app_admin_import_user', methods: ['GET', 'POST'])]
-    public function importUserByCSV(Request $request, UserRepository $userRepository, UserPasswordHasherInterface $userPasswordHasher): Response
+    public function importUserByCSV(Request $request, UserRepository $userRepository,
+                                    UserPasswordHasherInterface $userPasswordHasher,
+                                    ResetPasswordHelperInterface $resetPasswordHelper,
+                                    MailerInterface $mailer): Response
     {
         $form = $this->createForm(ImportUserType::class);
         $form->handleRequest($request);
@@ -242,11 +245,20 @@ class AdminController extends AbstractController
                         $user->setPassword($userPasswordHasher->hashPassword($user, $mdpRandom));
                         if($userRepository->findOneBy(['email'=> strval($array[$i][4])]) == null ){
                             $userRepository->add($user, true);
+                            $this->sendMailLogin($mailer, $resetPasswordHelper, $user);
                         }
                     }
+                    $this->addFlash('success', 'Utilisateur créé et l\'email contenant les identifiants de 
+                première connexion du nouvel utilisateur vient d\'être envoyé à l\'adresse mail renseignée.');
                 } catch (\Exception $e) {
+                    $this->addFlash('error', 'L\'email contenant les identifiants de 
+                première connexion du nouvel utilisateur n\'a pas pu être envoyé à l\'adresse mail renseignée');
+                } catch (ORMException $ORMException) {
                     $this->addFlash('error', 'Utilisateur non créé.');
                 }
+            }
+            if(file_exists($path)){
+                unlink($path);
             }
 
             return $this->redirectToRoute('app_admin_index', [], Response::HTTP_SEE_OTHER);
