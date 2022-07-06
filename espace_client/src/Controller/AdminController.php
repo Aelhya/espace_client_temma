@@ -21,6 +21,7 @@ use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
+use \Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 #[Route('/admin')]
 class AdminController extends AbstractController

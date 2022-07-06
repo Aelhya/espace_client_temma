@@ -25,6 +25,8 @@ class FileController extends AbstractController
             unlink($path);
         }
 
+
+
         return $this->redirectToRoute('app_admin_file_index', ['user_login'=> $user_login,
             'category_label' => $category_label], Response::HTTP_SEE_OTHER);
     }
