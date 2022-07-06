@@ -45,7 +45,7 @@ class AdminController extends AbstractController
 
     }
 
-    #[Route('/{user_login}', name: 'app_admin_category_index', methods: ['GET'])]
+    #[Route('/espace-client/{user_login}', name: 'app_admin_category_index', methods: ['GET'])]
     public function indexCategory(CategoryRepository $categoryRepository, UserRepository $userRepository, string $user_login): Response
     {
         return $this->render('category/index.html.twig', [
@@ -100,7 +100,7 @@ class AdminController extends AbstractController
 
 
 
-    #[Route('/{user_login}/{category_label}', name: 'app_admin_file_index', methods: ['GET'])]
+    #[Route('/espace-client/{user_login}/{category_label}', name: 'app_admin_file_index', methods: ['GET'])]
     public function indexFileUserCategory(FileRepository $fileRepository, string $user_login, string $category_label, UserRepository $userRepository, CategoryRepository $categoryRepository): Response
     {
         return $this->render('file/index.html.twig', [
@@ -110,7 +110,7 @@ class AdminController extends AbstractController
         ]);
     }
 
-    #[Route('/{user_login}/file/new', name: 'app_admin_file_new', methods: ['GET', 'POST'])]
+    #[Route('/espace-client/{user_login}/file/new', name: 'app_admin_file_new', methods: ['GET', 'POST'])]
     public function addFileUserCategory(Request        $request, FileRepository $fileRepository,
                                         string         $user_login,
                                         UserRepository $userRepository, CategoryRepository $categoryRepository, MailerInterface $mailer): Response
