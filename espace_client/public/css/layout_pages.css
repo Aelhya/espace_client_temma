@@ -22,7 +22,7 @@ main {
     color: black;
 }
 
-.add_file a {
+.add_file a, .icon-directory {
     text-decoration: none;
     color: black;
     display: flex;
@@ -74,9 +74,13 @@ table tbody tr:nth-child(2n+1) {
     background-color: white;
 }
 
-table tbody tr:hover {
+table tbody tr:hover{
     background-color: #A62A3D;
     cursor: pointer;
+    color: white;
+}
+
+table tbody tr:hover td{
     color: white;
 }
 

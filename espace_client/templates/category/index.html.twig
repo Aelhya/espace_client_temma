@@ -48,11 +48,11 @@
             {% if app.user.roles[0] is same as('ROLE_USER') %}
                 <tr onclick="location.href='{{ path('app_category_show', {'category_label': category.label } ) }}';">
             {% endif %}
-            <td><i class="fa-solid fa-folder-open"></i> {{ category.label }}</td>
+            <td class="icon-directory"><i class="fa-solid {{ category.icon }}"></i> {{ category.label }}</td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">Pas de dossier.</td>
+                <td colspan="3" class="margin-left-2-rem">Pas de dossier.</td>
             </tr>
         {% endfor %}
         </tbody>
