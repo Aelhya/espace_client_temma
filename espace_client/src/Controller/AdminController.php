@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\File;
 use App\Entity\User;
 use App\Form\FileType;
+use App\Form\ImportUserType;
 use App\Form\UserType;
 use App\Repository\CategoryRepository;
 use App\Repository\FileRepository;
@@ -31,7 +32,7 @@ class AdminController extends AbstractController
     public function index(UserRepository $userRepository): Response
     {
         return $this->render('user/index.html.twig', [
-            'users' => $userRepository->findBy(['isAdmin'=> '0'], array('enterprise' => 'ASC')),
+            'users' => $userRepository->findBy(['isAdmin' => '0'], array('enterprise' => 'ASC')),
         ]);
     }
 
@@ -202,5 +203,57 @@ class AdminController extends AbstractController
             $this->addFlash('error', 'Le mail notifiant le client qu\'un nouveau fichier 
             est disponible dans son espace client n\'a pas pu être envoyé.');
         }
+    }
+
+    #[Route('/import/user/add', name: 'app_admin_import_user', methods: ['GET', 'POST'])]
+    public function importUserByCSV(Request $request, UserRepository $userRepository, UserPasswordHasherInterface $userPasswordHasher): Response
+    {
+        $form = $this->createForm(ImportUserType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $documentFile = $form['document']->getData();
+            $uploadDirectory = '../src/Document/ImportUser/';
+            $name = pathinfo($documentFile->getClientOriginalName(), PATHINFO_FILENAME);
+            $path = $name . "." . pathinfo($documentFile->getClientOriginalName(), PATHINFO_EXTENSION);
+            $documentFile->move($uploadDirectory, $path);
+            $new_path = $uploadDirectory . $path;
+
+            if (file_exists($new_path)) {
+                $array = [];
+                $file_csv = fopen($new_path, "r");
+                $data = fgetcsv($file_csv, 1000, ",");
+                while (($data = fgetcsv($file_csv, 1000, ",")) !== FALSE) {
+                    // Read the data
+                    $array[] = $data;
+                }
+                fclose($file_csv);
+                try {
+                    for ($i = 0; $i < count($array); $i++) {
+                        $user = new User();
+                        $user->setRoles(["ROLE_USER"])
+                            ->setIsAdmin(0)
+                            ->setEnterprise(str_ireplace("\x92", "'", strval($array[$i][0])))
+                            ->setCivility(strval($array[$i][1]))
+                            ->setLastname(str_ireplace("\x92", "'", strval($array[$i][2])))
+                            ->setFirstname(str_ireplace("\x92", "'", strval($array[$i][3])))
+                            ->setEmail(strval($array[$i][4]))
+                            ->setLogin($array[$i][0]);
+                        $mdpRandom = User::randomPassword();
+                        $user->setPassword($userPasswordHasher->hashPassword($user, $mdpRandom));
+                        if($userRepository->findOneBy(['email'=> strval($array[$i][4])]) == null ){
+                            $userRepository->add($user, true);
+                        }
+                    }
+                } catch (\Exception $e) {
+                    $this->addFlash('error', 'Utilisateur non créé.');
+                }
+            }
+
+            return $this->redirectToRoute('app_admin_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('user/import_user.html.twig', [
+            'form' => $form,
+        ]);
     }
 }
