@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\File;
-use App\Form\FileType;
 use App\Repository\FileRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
