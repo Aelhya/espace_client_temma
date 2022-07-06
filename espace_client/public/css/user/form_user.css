@@ -48,3 +48,13 @@ a {
 a:hover span {
     border-bottom: 1px solid black;
 }
+
+/* --- MEDIA QUERRIES --- */
+/* --- Version téléphone --- */
+@media only screen and (max-width: 767px) {
+    .info_client {
+        gap: 0;
+    }
+}
+
+/* --- FIN MEDIA QUERRIES --- */

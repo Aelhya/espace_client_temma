@@ -88,7 +88,7 @@
 /* --- Version téléphone --- */
 @media only screen and (max-width: 767px) {
     .responsive-user {
-        display: none;
+        display: none !important;
     }
 
     .flex-row {
