@@ -25,12 +25,24 @@ use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
 #[Route('/admin')]
 class AdminController extends AbstractController
 {
-    #[Route('/', name: 'app_admin_index', methods: ['GET'])]
-    public function index(UserRepository $userRepository): Response
+
+    #[Route('/{search}', name: 'app_admin_index', methods: ['GET'])]
+    public function index(UserRepository $userRepository, string $search = ""): Response
     {
-        return $this->render('user/index.html.twig', [
-            'users' => $userRepository->findBy(['isAdmin' => '0'], array('enterprise' => 'ASC')),
-        ]);
+        if ($search == "" && isset($_GET['search'])) {
+            $search = $_GET['search'];
+        }
+
+        if ($search) {
+            return $this->render('user/index.html.twig', [
+                'users' => $userRepository->findByEnterprise($search),
+            ]);
+        } else {
+            return $this->render('user/index.html.twig', [
+                'users' => $userRepository->findBy(['isAdmin' => '0'], array('enterprise' => 'ASC')),
+            ]);
+        }
+
     }
 
     #[Route('/{user_login}', name: 'app_admin_category_index', methods: ['GET'])]
@@ -43,8 +55,8 @@ class AdminController extends AbstractController
     }
 
     #[Route('/user/new', name: 'app_user_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, UserRepository $userRepository,
-                        UserPasswordHasherInterface $userPasswordHasher,
+    public function new(Request                      $request, UserRepository $userRepository,
+                        UserPasswordHasherInterface  $userPasswordHasher,
                         ResetPasswordHelperInterface $resetPasswordHelper,
                         MailerInterface $mailer,
                         MailController $mailController): Response
@@ -190,10 +202,10 @@ class AdminController extends AbstractController
     }
 
     #[Route('/import/user/add', name: 'app_admin_import_user', methods: ['GET', 'POST'])]
-    public function importUserByCSV(Request $request, UserRepository $userRepository,
-                                    UserPasswordHasherInterface $userPasswordHasher,
+    public function importUserByCSV(Request                      $request, UserRepository $userRepository,
+                                    UserPasswordHasherInterface  $userPasswordHasher,
                                     ResetPasswordHelperInterface $resetPasswordHelper,
-                                    MailerInterface $mailer): Response
+                                    MailerInterface              $mailer): Response
     {
         $form = $this->createForm(ImportUserType::class);
         $form->handleRequest($request);
@@ -227,7 +239,7 @@ class AdminController extends AbstractController
                             ->setLogin($array[$i][0]);
                         $mdpRandom = User::randomPassword();
                         $user->setPassword($userPasswordHasher->hashPassword($user, $mdpRandom));
-                        if($userRepository->findOneBy(['email'=> strval($array[$i][4])]) == null ){
+                        if ($userRepository->findOneBy(['email' => strval($array[$i][4])]) == null) {
                             $userRepository->add($user, true);
                         }
                     }
@@ -239,7 +251,7 @@ class AdminController extends AbstractController
                     $this->addFlash('error', 'Utilisateur non créé.');
                 }
             }
-            if(file_exists($path)){
+            if (file_exists($path)) {
                 unlink($path);
             }
 
