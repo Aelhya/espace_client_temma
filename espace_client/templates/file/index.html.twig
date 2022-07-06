@@ -51,7 +51,7 @@
         {% for file in files %}
             <div class="divTableRow"
                  onclick="location.href='{{ path('app_admin_category_index', {'user_login': user.login}) }}';">
-                <div class="divTableCell namefile content padding-right-after-cut-word cut-txt-overflow">{{ file.path }}</div>
+                <div class="divTableCell namefile content padding-right-after-cut-word cut-txt-overflow">{{ file.name }}</div>
                 <div class="divTableCell content responsive-user">{{ file.format }}</div>
                 <div class="divTableCell content padding-right-after-cut-word cut-txt-overflow responsive-user">{{ file.created_at ? file.created_at|date('d-m-Y') : '' }}</div>
                 <div class="divTableCell content padding-right-after-cut-word cut-txt-overflow responsive-user no-print">
