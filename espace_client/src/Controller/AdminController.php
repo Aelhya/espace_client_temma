@@ -255,8 +255,8 @@ class AdminController extends AbstractController
                         }
                         $this->addFlash('success', 'Import réalisé avec succès.');
 
-                        if (file_exists($path)) {
-                            unlink($path);
+                        if (file_exists($new_path)) {
+                            unlink($new_path);
                         }
                     } catch (\Exception $e) {
                         $this->addFlash('error', 'L\'email contenant les identifiants de 
