@@ -33,7 +33,6 @@ class UserController extends AbstractController
                 $user->setIsAdmin(1);
             }
             $userRepository->add($user, true);
-
             return $this->redirectToRoute('app_user_category_index', [], Response::HTTP_SEE_OTHER);
         }
 
